@@ -7,24 +7,28 @@
  
 int main (int agrc, char * argv[])
 {
+    char *fichier;
+
     if (agrc>1)
     {
         if (strcmp(argv[1],"stats"))
         {
+            system("clear");
             printf("Erreur de paramètres\n");
         }
         else
         {
+            system("clear");
             printf("Lancement des stats...\n");
         }
     }  
     else
     {
+        system("clear");
         printf("Lancement du screensaver...\n");
         int f;
         int random;
         int i;
-        system("clear");        /* Nettoye la console*/
         srand(time(NULL));      /*Graine permettant d'éviter la repetition*/
         random = rand();
         random = (random%3);    
@@ -33,7 +37,7 @@ int main (int agrc, char * argv[])
             f=fork();
             if (f==0)
             {
-                printf("Demarrage du statique");
+                printf("Demarrage du statique\n");
                 exit(1);
             }
             else
@@ -46,7 +50,7 @@ int main (int agrc, char * argv[])
             f=fork();
             if (f==0)
             {
-                printf("Demarrage du dynamique");
+                printf("Demarrage du dynamique\n");
                 exit(1);
             }
             else
@@ -59,7 +63,9 @@ int main (int agrc, char * argv[])
             f=fork();
             if (f==0)
             {
-                printf("Demarrage de l'interactif");
+                fichier="avion";
+                printf("Demarrage de l'interactif\n");
+                execl(fichier,fichier,NULL);
                 exit(1);
             }
             else
