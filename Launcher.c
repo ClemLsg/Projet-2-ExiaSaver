@@ -39,6 +39,9 @@ void tri_bulle(int n)
     int a;
     int b;
     char temp;
+    int typea=0;
+    int typeb=0;
+    int typec=0;
     while(pastrie)
     {
         pastrie=FALSE;
@@ -48,6 +51,7 @@ void tri_bulle(int n)
             b=(int) chainehisto[j+1][20];
             a=transformation(a);
             b=transformation(b);
+
             if(a>b){
                 strcpy(tmp[0],chainehisto[j+1]);
                 strcpy(chainehisto[j+1],chainehisto[j]);
@@ -60,7 +64,22 @@ void tri_bulle(int n)
     n=n+1;
     for (j=0; j<n; j++){
         printf("%s",chainehisto[j]);
+        a=(int) chainehisto[j][20];
+        a=transformation(a);
+        switch(a){
+                case 1:
+                    typea++;
+                    break;
+                case 2:
+                    typeb++;
+                    break;
+                case 3:
+                    typec++;
+                    break;
+            }
     }
+    typec=typec-1;
+    printf("Vous avez lancé %d fois l'ExiaSaver statique, %d fois le dynamique et %d fois l'interactif ! \n",typea,typeb,typec);
 }
     
 
@@ -99,6 +118,7 @@ void statistiques()
             printf("trié par date:\n\n");
             for (j=0;j<i;j++)
                 printf("%s\n",chainehisto[j]);
+            printf("Vous avez lancé %d fois ExiaSaver !\n",i);
             break;
         case 2:
             printf("trié par type:\n\n");
