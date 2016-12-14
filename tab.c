@@ -55,7 +55,7 @@ int tab_editeur(char **A, int Xinit, int Yinit, char *file, int tail){
 	    		token = strtok(NULL," ");
     			strcpy(largeur,token);
     			int larg = atoi(largeur);
-			if(tail == 2){
+			if(tail == 2){ // Si tail est égal a 2 alors la taille de l'image est doublée
 			larg =larg*2;
 			}
 
@@ -82,25 +82,25 @@ int tab_editeur(char **A, int Xinit, int Yinit, char *file, int tail){
     				if(X<=w.ws_col || Y<=w.ws_row){ // Si les coordonnées du caractère sont bien sur la console
     					if(Y>=w.ws_row) return 0; // Si les coordonées dépassents en Y, ignoré
 	    				if(strncmp(token, "0",1) == 0){ // Si c'est un 0, ecrire un espace
-	    					if(tail == 2){
-						    A[Y][X]=' ';
-						    A[Y][X+1]=' ';
-						    strcat(chaine, "  ");
+	    					if(tail == 2){ // Si tail égal a 2
+						    A[Y][X]=' '; // Ecrire un espace aux coordonnés Y X
+						    A[Y][X+1]=' '; // Ecrire un espace aux coordonnés Y X+1 pour doubler le caractère
+						    strcat(chaine, "  "); // Ajout a la chaine tampon le double espace
 						    X = X+2;
 						    i++;
-						} else {
+						} else { // Sinon écrire un seul espace 
 						    A[Y][X]=' ';
 						    X++;
 						    i++;
 						}}
 	    				if(strncmp(token, "1",1) == 0){ // Si c'est un 1, ecrire un X
-	    					if(tail == 2){
-						    A[Y][X]='@';
-						    A[Y][X+1]='@';
-						    strcat(chaine, "@@");
+	    					if(tail == 2){ // Si tail égal a 2
+						    A[Y][X]='@'; // Ecrire un @ aux coordonnés Y X
+						    A[Y][X+1]='@'; // Ecrire un @ aux coordonnés Y X+1 pour doubler le caractère
+						    strcat(chaine, "@@"); // Ajout a la chaine tampon le double @
 						    X = X+2;
 						    i++;
-						} else {
+						} else { // Sinon écrire un seul @
 						    A[Y][X]='@';
 						    X++;
 						    i++;
@@ -108,17 +108,17 @@ int tab_editeur(char **A, int Xinit, int Yinit, char *file, int tail){
 	    				if(strncmp(token, "2",1) == 0){ // Si c'est un 2, mettre un vide
 	    					X++;
 	    					i++;}
-	    				if(i>=longu){ // Si l'on a parcouru toute la ligne, changé de ligne
-	    					if(tail == 2){
+	    				if(i>=longu){ // Si l'on a parcouru toute la ligne
+	    					if(tail == 2){ // Et que tail égal a 2
 						    X=Xinit;
-						    for(m = 0; m < 6; m++){
+						    for(m = 0; m < 6; m++){ // On ajoute chaque caracrères de la chaine tampon au tableau a 2 dimensions avec un Y de différence
 							temp = chaine[m];
 							A[Y+1][X]= temp;
 							X++;
 							chaine[m] = 0;
 						    }
 						    Y = Y+2;
-						} else {
+						} else { // Sinon on passe a la prochaine ligne
 						    Y++;
 						}
 						X=Xinit;
