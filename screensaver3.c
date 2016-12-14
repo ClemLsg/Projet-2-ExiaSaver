@@ -43,12 +43,12 @@ char getch()
 int main(int argc, char * argv[]){
 	struct winsize w; // Création d'une structure contenant la taille de la console
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w); // Ecriture de la taille de la console dans la structure "w"
-    int i,I,J,last;
-    char entry;
+    int i,I,J,last; //Déclaration des variables de type INT
+    char entry; //Déclaration de la variables de type INT
 	struct pos Pos;
-	int posx = strtol(argv[1], NULL, 10);
-	int posy = strtol(argv[2], NULL, 10);
-	Pos.x = posx;
+	int posx = strtol(argv[1], NULL, 10); //Récuparation de la position X aléatoire
+	int posy = strtol(argv[2], NULL, 10); //Récuparation de la position X aléatoire
+	Pos.x = posx; // Injection des arguments dans la structure pos
 	Pos.y = posy;
 
 /*CREATION DU TABLEAU A DEUX DIMENSIONS */
@@ -59,12 +59,10 @@ int main(int argc, char * argv[]){
         A[i] = malloc(w.ws_col *  w.ws_row * sizeof(char));}
     printf("pass first");
 	tab_clear(A);
-	/* Pour chaque ligne ... */
 
-	system("clear");
-	// tab_afficheur(A);
+	system("clear"); //Netoyage de la console
 
-	if(strcmp(argv[3],"0")==0){
+	if(strcmp(argv[3],"0")==0){ //Selection de la direction aléatoirement
 		tab_editeur(A,Pos.x,Pos.y,"avion bas.pbm");
 	}
 	if(strcmp(argv[3],"1")==0){
@@ -76,41 +74,52 @@ int main(int argc, char * argv[]){
 	if(strcmp(argv[3],"3")==0){
 		tab_editeur(A,Pos.x,Pos.y,"avion droite.pbm");
 	}
-
+    //Edition du tableau avec l'ajout des nuages
 	tab_editeur(A,0,0,"nuage.pbm");
 	tab_editeur(A,27,0,"nuage.pbm");
 	tab_editeur(A,54,0,"nuage.pbm");
 	tab_editeur(A,81,0,"nuage.pbm");
 	tab_editeur(A,108,0,"nuage.pbm");
+    //Affichage du tableau
     tab_afficheur(A);
-    printf("pass"); 
-	while (1){
-    printf("x:%d y:%d", Pos.x, Pos.y);
-	entry = getch();
+
+	while (1){ // Boucle infini
+    printf("x:%d y:%d", Pos.x, Pos.y); //Affichage des coordonnées
+	entry = getch(); // Quand l'utilisateur utilise le clavier
         switch (entry)
         {
 
-        	case 's':
-        		Pos.y++;
-        		last = 0;
+        	case 's': // Si il a appuyer sur 's'
+        		Pos.y++; // On augmente la position y
+        		last = 0; // On dis que le dernier sens etait le bas
+
+                // Quand on arrive hors de l'espace aérien, on est téléporter a l'opposé
         		if(Pos.x == w.ws_col) Pos.x = 1;
         		if(Pos.y == w.ws_row) Pos.y = 1;
         		if(Pos.x == 0) Pos.x = w.ws_col-1;  
-        		if(Pos.y == 0) Pos.y = w.ws_row-1;  
-				tab_clear(A); 
+        		if(Pos.y == 0) Pos.y = w.ws_row-1; 
+
+				tab_clear(A);
+
+                //Ajout de la flotte mirroir au tableau
         		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"avion bas.pbm");        		
         		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"avion bas.pbm");
         		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"avion bas.pbm");
         		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"avion bas.pbm");        		
         		tab_editeur(A,Pos.x,Pos.y,"avion bas.pbm");
+
+                //Ajout de l'avion principal au tableau
         		tab_editeur(A,0,0,"nuage.pbm");
         		tab_editeur(A,27,0,"nuage.pbm");
         		tab_editeur(A,54,0,"nuage.pbm");
         		tab_editeur(A,81,0,"nuage.pbm");
         		tab_editeur(A,108,0,"nuage.pbm");
+
+                //Affichage du tableau
         		tab_afficheur(A);
         		break;
-        	case 'q':
+
+        	case 'q': //Meme chose avec un deplacement sur la gauche
         		Pos.x--;
         		last = 1;
         		if(Pos.x == w.ws_col) Pos.x = 1;
@@ -130,7 +139,7 @@ int main(int argc, char * argv[]){
         		tab_editeur(A,108,0,"nuage.pbm");
         		tab_afficheur(A);
         		break;
-        	case 'z':
+        	case 'z': //Meme chose avec un deplacement sur le haut
         		Pos.y--;
         		last = 2;
         		if(Pos.x == w.ws_col) Pos.x = 1;
@@ -150,7 +159,7 @@ int main(int argc, char * argv[]){
         		tab_editeur(A,108,0,"nuage.pbm");
         		tab_afficheur(A);
         		break;
-        	case 'd':
+        	case 'd': //Meme chose avec un deplacement sur la droite
         		Pos.x++;
         		last = 3;
         		if(Pos.x == w.ws_col) Pos.x = 1;
@@ -170,7 +179,7 @@ int main(int argc, char * argv[]){
         		tab_editeur(A,108,0,"nuage.pbm");
         		tab_afficheur(A);
         		break;
-        	case '\n':
+        	case '\n': // Si l'on appuye sur ENTER, refait le dernier mouvement
         		if(last == 0){
     			    Pos.y++;
 	        		last = 0;
@@ -254,7 +263,7 @@ int main(int argc, char * argv[]){
         		break;
 
         	case 'x':
-        		exit(0);
+        		exit(0); // Si l'on appuye sur x, le programme s'arrete
 
 
 }
