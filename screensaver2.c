@@ -10,66 +10,82 @@
 #include <termios.h>
 #include "tab.h"
 
-void pbm_switch(char **A, int ctime, int Xpos, int tail){ // Fonction permettant de choisir le PBM correspondant au chiffre
+void pbm_switch(char **A, int ctime, int Xpos, int tail, char *idir){ // Fonction permettant de choisir le PBM correspondant au chiffre
 
-	char pbm_0[256] = "Images/0.pbm"; // Chargement des PBM
-	char pbm_1[256] = "Images/1.pbm";
-	char pbm_2[256] = "Images/2.pbm";
-	char pbm_3[256] = "Images/3.pbm";
-	char pbm_4[256] = "Images/4.pbm";
-	char pbm_5[256] = "Images/5.pbm";
-	char pbm_6[256] = "Images/6.pbm";
-	char pbm_7[256] = "Images/7.pbm";
-	char pbm_8[256] = "Images/8.pbm";
-	char pbm_9[256] = "Images/9.pbm";
+	int i =0;
+	char p0[254]="", p1[254]="", p2[254]="", p3[254]="", p4[254]="", p5[254]="", p6[254]="", p7[254]="", p8[254]="", p9[254]="";
 
 	switch(ctime){ // Switch de séléction du PBM en fonction de la valeur de ctime
 			case 0:
-				tab_editeur(A,Xpos,666,pbm_0, tail);
+				strcpy(p0,idir);
+				strcat(p0,"/0.pbm");
+				tab_editeur(A,Xpos,666,p0, tail);
 				break;
 			case 1:
-				tab_editeur(A,Xpos,666,pbm_1, tail);
+				strcpy(p1,idir);
+				strcat(p1,"/1.pbm");
+				tab_editeur(A,Xpos,666,p1, tail);
 				break;
 			case 2:
-				tab_editeur(A,Xpos,666,pbm_2, tail);
+				strcpy(p2,idir);
+				strcat(p2,"/2.pbm");
+				tab_editeur(A,Xpos,666,p2, tail);
 				break;
 			case 3:
-				tab_editeur(A,Xpos,666,pbm_3, tail);
+				strcpy(p3,idir);
+				strcat(p3,"/3.pbm");
+				tab_editeur(A,Xpos,666,p3, tail);
 				break;
 			case 4:
-				tab_editeur(A,Xpos,666,pbm_4, tail);
+				strcpy(p4,idir);
+				strcat(p4,"/4.pbm");
+				tab_editeur(A,Xpos,666,p4, tail);
 				break;
 			case 5:
-				tab_editeur(A,Xpos,666,pbm_5, tail);
+				strcpy(p5,idir);
+				strcat(p5,"/5.pbm");
+				tab_editeur(A,Xpos,666,p5, tail);
 				break;
 			case 6:
-				tab_editeur(A,Xpos,666,pbm_6, tail);
+				strcpy(p6,idir);
+				strcat(p6,"/6.pbm");
+				tab_editeur(A,Xpos,666,p6, tail);
 				break;
 			case 7:
-				tab_editeur(A,Xpos,666,pbm_7, tail);
+				strcpy(p7,idir);
+				strcat(p7,"/7.pbm");
+				tab_editeur(A,Xpos,666,p7, tail);
 				break;
 			case 8:
-				tab_editeur(A,Xpos,666,pbm_8, tail);
+				strcpy(p8,idir);
+				strcat(p8,"/8.pbm");
+				tab_editeur(A,Xpos,666,p8, tail);
 				break;
 			case 9:
-				tab_editeur(A,Xpos,666,pbm_9, tail);
+				strcpy(p9,idir);
+				strcat(p9,"/9.pbm");
+				tab_editeur(A,Xpos,666,p9, tail);
 				break;
 		}
+
+
 }
 
 int main(int argc, char *argv[])
 {
 	int dizh, unith, dizm, unitm, dizs, units;
-	int  Dur = 10; // Variable de secondes entre chaque rafraichissemtn
-	int tail = 2; // Variable donnant la taille du PBM (1 pour 5x3 et 2 pour 10x6)
-	char pbm;
+	int tail = strtol(argv[1], NULL, 10); //Récuparation de la position X aléatoire
+	int Dur = strtol(argv[2], NULL, 10); //Récuparation de la position X aléatoire
+	char idir[254]="", pbm_deux[254]="";
+	strcpy(idir,argv[3]);
 
 	struct winsize w; // Création d'une structure contenant la taille de la console
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w); // Ecriture de la taille de la console dans la structure "w"
     int i,I,J;
 
 	int hour, min, sec; // Variables pour l'heure
-	char pbm_deux[256] = "Images/deuxpoints.pbm"; // Chargement des deux points
+	strcpy(pbm_deux,argv[3]); // Chargement des deux points
+	strcat(pbm_deux,"/deuxpoints.pbm");
 
 /*CREATION DU TABLEAU A DEUX DIMENSIONS */
 
@@ -97,18 +113,18 @@ int main(int argc, char *argv[])
 		dizs = sec/10;
 		units = sec%10;
 
-		pbm_switch(A,dizh,((w.ws_col-3)/2)-(tail*14), tail); // Lancement de la fonction pbm_switch
-		pbm_switch(A,unith,((w.ws_col-3)/2)-(tail*10), tail);
+		pbm_switch(A,dizh,((w.ws_col-3)/2)-(tail*14), tail, idir); // Lancement de la fonction pbm_switch
+		pbm_switch(A,unith,((w.ws_col-3)/2)-(tail*10), tail, idir);
 
 		tab_editeur(A,((w.ws_col-3)/2)-(tail*7),666,pbm_deux, tail); // Ajout des deux points
 
-		pbm_switch(A,dizm,((w.ws_col-3)/2)-(tail*4), tail);
-		pbm_switch(A,unitm,((w.ws_col-3)/2), tail);
+		pbm_switch(A,dizm,((w.ws_col-3)/2)-(tail*4), tail, idir);
+		pbm_switch(A,unitm,((w.ws_col-3)/2), tail, idir);
 
 		tab_editeur(A,((w.ws_col-3)/2)+(tail*3),666,pbm_deux, tail); // Ajout des deux points
 
-		pbm_switch(A,dizs,((w.ws_col-3)/2)+(tail*7), tail);
-		pbm_switch(A,units,((w.ws_col-3)/2)+(tail*12), tail);
+		pbm_switch(A,dizs,((w.ws_col-3)/2)+(tail*7), tail, idir);
+		pbm_switch(A,units,((w.ws_col-3)/2)+(tail*12), tail, idir);
 
 		tab_afficheur(A); // affichage du tableau
 		printf("Cet écran sera actualisé dans quelques secondes");
