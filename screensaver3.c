@@ -63,23 +63,23 @@ int main(int argc, char * argv[]){
 	system("clear"); //Netoyage de la console
 
 	if(strcmp(argv[3],"0")==0){ //Selection de la direction aléatoirement
-		tab_editeur(A,Pos.x,Pos.y,"avion bas.pbm");
+		tab_editeur(A,Pos.x,Pos.y,"pbm/avion bas.pbm");
 	}
 	if(strcmp(argv[3],"1")==0){
-		tab_editeur(A,Pos.x,Pos.y,"avion haut.pbm");
+		tab_editeur(A,Pos.x,Pos.y,"pbm/avion haut.pbm");
 	}
 	if(strcmp(argv[3],"2")==0){
-		tab_editeur(A,Pos.x,Pos.y,"avion gauche.pbm");
+		tab_editeur(A,Pos.x,Pos.y,"pbm/avion gauche.pbm");
 	}
 	if(strcmp(argv[3],"3")==0){
-		tab_editeur(A,Pos.x,Pos.y,"avion droite.pbm");
+		tab_editeur(A,Pos.x,Pos.y,"pbm/avion droite.pbm");
 	}
     //Edition du tableau avec l'ajout des nuages
-	tab_editeur(A,0,0,"nuage.pbm");
-	tab_editeur(A,27,0,"nuage.pbm");
-	tab_editeur(A,54,0,"nuage.pbm");
-	tab_editeur(A,81,0,"nuage.pbm");
-	tab_editeur(A,108,0,"nuage.pbm");
+	tab_editeur(A,0,0,"pbm/nuage.pbm");
+	tab_editeur(A,27,0,"pbm/nuage.pbm");
+	tab_editeur(A,54,0,"pbm/nuage.pbm");
+	tab_editeur(A,81,0,"pbm/nuage.pbm");
+	tab_editeur(A,108,0,"pbm/nuage.pbm");
     //Affichage du tableau
     tab_afficheur(A);
 
@@ -102,18 +102,18 @@ int main(int argc, char * argv[]){
 				tab_clear(A);
 
                 //Ajout de la flotte mirroir au tableau
-        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"avion bas.pbm");        		
-        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"avion bas.pbm");
-        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"avion bas.pbm");
-        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"avion bas.pbm");        		
-        		tab_editeur(A,Pos.x,Pos.y,"avion bas.pbm");
+        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"pbm/avion bas.pbm");        		
+        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"pbm/avion bas.pbm");
+        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"pbm/avion bas.pbm");
+        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"pbm/avion bas.pbm");        		
+        		tab_editeur(A,Pos.x,Pos.y,"pbm/avion bas.pbm");
 
                 //Ajout de l'avion principal au tableau
-        		tab_editeur(A,0,0,"nuage.pbm");
-        		tab_editeur(A,27,0,"nuage.pbm");
-        		tab_editeur(A,54,0,"nuage.pbm");
-        		tab_editeur(A,81,0,"nuage.pbm");
-        		tab_editeur(A,108,0,"nuage.pbm");
+        		tab_editeur(A,0,0,"pbm/nuage.pbm");
+        		tab_editeur(A,27,0,"pbm/nuage.pbm");
+        		tab_editeur(A,54,0,"pbm/nuage.pbm");
+        		tab_editeur(A,81,0,"pbm/nuage.pbm");
+        		tab_editeur(A,108,0,"pbm/nuage.pbm");
 
                 //Affichage du tableau
         		tab_afficheur(A);
@@ -127,16 +127,16 @@ int main(int argc, char * argv[]){
         		if(Pos.x == 0) Pos.x = w.ws_col-1;  
         		if(Pos.y == 0) Pos.y = w.ws_row-1; 
 				tab_clear(A);  
-        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"avion gauche.pbm");        		
-        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"avion gauche.pbm");
-        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"avion gauche.pbm");
-        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"avion gauche.pbm");        		
-        		tab_editeur(A,Pos.x,Pos.y,"avion gauche.pbm");
-        		tab_editeur(A,0,0,"nuage.pbm");
-        		tab_editeur(A,27,0,"nuage.pbm");
-        		tab_editeur(A,54,0,"nuage.pbm");
-        		tab_editeur(A,81,0,"nuage.pbm");
-        		tab_editeur(A,108,0,"nuage.pbm");
+        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"pbm/avion gauche.pbm");        		
+        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"pbm/avion gauche.pbm");
+        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"pbm/avion gauche.pbm");
+        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"pbm/avion gauche.pbm");        		
+        		tab_editeur(A,Pos.x,Pos.y,"pbm/avion gauche.pbm");
+        		tab_editeur(A,0,0,"pbm/nuage.pbm");
+        		tab_editeur(A,27,0,"pbm/nuage.pbm");
+        		tab_editeur(A,54,0,"pbm/nuage.pbm");
+        		tab_editeur(A,81,0,"pbm/nuage.pbm");
+        		tab_editeur(A,108,0,"pbm/nuage.pbm");
         		tab_afficheur(A);
         		break;
         	case 'z': //Meme chose avec un deplacement sur le haut
@@ -147,16 +147,16 @@ int main(int argc, char * argv[]){
         		if(Pos.x == 0) Pos.x = w.ws_col-1;  
         		if(Pos.y == 0) Pos.y = w.ws_row-1;
 				tab_clear(A); 
-        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"avion haut.pbm");        		
-        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"avion haut.pbm");
-        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"avion haut.pbm");
-        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"avion haut.pbm");
-        		tab_editeur(A,Pos.x,Pos.y,"avion haut.pbm");
-        		tab_editeur(A,0,0,"nuage.pbm");
-        		tab_editeur(A,27,0,"nuage.pbm");
-        		tab_editeur(A,54,0,"nuage.pbm");
-        		tab_editeur(A,81,0,"nuage.pbm");
-        		tab_editeur(A,108,0,"nuage.pbm");
+        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"pbm/avion haut.pbm");        		
+        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"pbm/avion haut.pbm");
+        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"pbm/avion haut.pbm");
+        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"pbm/avion haut.pbm");
+        		tab_editeur(A,Pos.x,Pos.y,"pbm/avion haut.pbm");
+        		tab_editeur(A,0,0,"pbm/nuage.pbm");
+        		tab_editeur(A,27,0,"pbm/nuage.pbm");
+        		tab_editeur(A,54,0,"pbm/nuage.pbm");
+        		tab_editeur(A,81,0,"pbm/nuage.pbm");
+        		tab_editeur(A,108,0,"pbm/nuage.pbm");
         		tab_afficheur(A);
         		break;
         	case 'd': //Meme chose avec un deplacement sur la droite
@@ -167,16 +167,16 @@ int main(int argc, char * argv[]){
         		if(Pos.x == 0) Pos.x = w.ws_col-1;  
         		if(Pos.y == 0) Pos.y = w.ws_row-1; 
 				tab_clear(A);  
-        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"avion droite.pbm");        		
-        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"avion droite.pbm");
-        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"avion droite.pbm");
-        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"avion droite.pbm");
-        		tab_editeur(A,Pos.x,Pos.y,"avion droite.pbm");
-        		tab_editeur(A,0,0,"nuage.pbm");
-        		tab_editeur(A,27,0,"nuage.pbm");
-        		tab_editeur(A,54,0,"nuage.pbm");
-        		tab_editeur(A,81,0,"nuage.pbm");
-        		tab_editeur(A,108,0,"nuage.pbm");
+        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"pbm/avion droite.pbm");        		
+        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"pbm/avion droite.pbm");
+        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"pbm/avion droite.pbm");
+        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"pbm/avion droite.pbm");
+        		tab_editeur(A,Pos.x,Pos.y,"pbm/avion droite.pbm");
+        		tab_editeur(A,0,0,"pbm/nuage.pbm");
+        		tab_editeur(A,27,0,"pbm/nuage.pbm");
+        		tab_editeur(A,54,0,"pbm/nuage.pbm");
+        		tab_editeur(A,81,0,"pbm/nuage.pbm");
+        		tab_editeur(A,108,0,"pbm/nuage.pbm");
         		tab_afficheur(A);
         		break;
         	case '\n': // Si l'on appuye sur ENTER, refait le dernier mouvement
@@ -188,16 +188,16 @@ int main(int argc, char * argv[]){
 	        		if(Pos.x == 0) Pos.x = w.ws_col-1;  
 	        		if(Pos.y == 0) Pos.y = w.ws_row-1;  
 					tab_clear(A); 
-	        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"avion bas.pbm");        		
-	        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"avion bas.pbm");
-	        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"avion bas.pbm");
-	        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"avion bas.pbm");        		
-	        		tab_editeur(A,Pos.x,Pos.y,"avion bas.pbm");
-	        		tab_editeur(A,0,0,"nuage.pbm");
-	        		tab_editeur(A,27,0,"nuage.pbm");
-	        		tab_editeur(A,54,0,"nuage.pbm");
-	        		tab_editeur(A,81,0,"nuage.pbm");
-	        		tab_editeur(A,108,0,"nuage.pbm");
+	        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"pbm/avion bas.pbm");        		
+	        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"pbm/avion bas.pbm");
+	        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"pbm/avion bas.pbm");
+	        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"pbm/avion bas.pbm");        		
+	        		tab_editeur(A,Pos.x,Pos.y,"pbm/avion bas.pbm");
+	        		tab_editeur(A,0,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,27,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,54,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,81,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,108,0,"pbm/nuage.pbm");
 	        		tab_afficheur(A);
         		}
         		if(last == 1){
@@ -208,16 +208,16 @@ int main(int argc, char * argv[]){
 	        		if(Pos.x == 0) Pos.x = w.ws_col-1;  
 	        		if(Pos.y == 0) Pos.y = w.ws_row-1; 
 					tab_clear(A);  
-	        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"avion gauche.pbm");        		
-	        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"avion gauche.pbm");
-	        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"avion gauche.pbm");
-	        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"avion gauche.pbm");        		
-	        		tab_editeur(A,Pos.x,Pos.y,"avion gauche.pbm");
-	        		tab_editeur(A,0,0,"nuage.pbm");
-	        		tab_editeur(A,27,0,"nuage.pbm");
-	        		tab_editeur(A,54,0,"nuage.pbm");
-	        		tab_editeur(A,81,0,"nuage.pbm");
-	        		tab_editeur(A,108,0,"nuage.pbm");
+	        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"pbm/avion gauche.pbm");        		
+	        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"pbm/avion gauche.pbm");
+	        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"pbm/avion gauche.pbm");
+	        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"pbm/avion gauche.pbm");        		
+	        		tab_editeur(A,Pos.x,Pos.y,"pbm/avion gauche.pbm");
+	        		tab_editeur(A,0,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,27,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,54,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,81,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,108,0,"pbm/nuage.pbm");
 	        		tab_afficheur(A);
         		}
         		if(last == 2){
@@ -228,16 +228,16 @@ int main(int argc, char * argv[]){
 	        		if(Pos.x == 0) Pos.x = w.ws_col-1;  
 	        		if(Pos.y == 0) Pos.y = w.ws_row-1;
 					tab_clear(A); 
-	        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"avion haut.pbm");        		
-	        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"avion haut.pbm");
-	        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"avion haut.pbm");
-	        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"avion haut.pbm");
-	        		tab_editeur(A,Pos.x,Pos.y,"avion haut.pbm");
-	        		tab_editeur(A,0,0,"nuage.pbm");
-	        		tab_editeur(A,27,0,"nuage.pbm");
-	        		tab_editeur(A,54,0,"nuage.pbm");
-	        		tab_editeur(A,81,0,"nuage.pbm");
-	        		tab_editeur(A,108,0,"nuage.pbm");
+	        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"pbm/avion haut.pbm");        		
+	        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"pbm/avion haut.pbm");
+	        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"pbm/avion haut.pbm");
+	        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"pbm/avion haut.pbm");
+	        		tab_editeur(A,Pos.x,Pos.y,"pbm/avion haut.pbm");
+	        		tab_editeur(A,0,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,27,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,54,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,81,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,108,0,"pbm/nuage.pbm");
 	        		tab_afficheur(A);
         		}
         		if(last ==3){
@@ -248,16 +248,16 @@ int main(int argc, char * argv[]){
 	        		if(Pos.x == 0) Pos.x = w.ws_col-1;  
 	        		if(Pos.y == 0) Pos.y = w.ws_row-1; 
 					tab_clear(A);  
-	        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"avion droite.pbm");        		
-	        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"avion droite.pbm");
-	        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"avion droite.pbm");
-	        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"avion droite.pbm");
-	        		tab_editeur(A,Pos.x,Pos.y,"avion droite.pbm");
-	        		tab_editeur(A,0,0,"nuage.pbm");
-	        		tab_editeur(A,27,0,"nuage.pbm");
-	        		tab_editeur(A,54,0,"nuage.pbm");
-	        		tab_editeur(A,81,0,"nuage.pbm");
-	        		tab_editeur(A,108,0,"nuage.pbm");
+	        		tab_editeur(A,Pos.x,Pos.y+w.ws_row,"pbm/avion droite.pbm");        		
+	        		tab_editeur(A,Pos.x,Pos.y-w.ws_row,"pbm/avion droite.pbm");
+	        		tab_editeur(A,Pos.x+w.ws_col,Pos.y,"pbm/avion droite.pbm");
+	        		tab_editeur(A,Pos.x-w.ws_col,Pos.y,"pbm/avion droite.pbm");
+	        		tab_editeur(A,Pos.x,Pos.y,"pbm/avion droite.pbm");
+	        		tab_editeur(A,0,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,27,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,54,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,81,0,"pbm/nuage.pbm");
+	        		tab_editeur(A,108,0,"pbm/nuage.pbm");
 	        		tab_afficheur(A);
         		}
         		break;
