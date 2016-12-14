@@ -39,9 +39,9 @@ void tri_bulle(int n)                                                   //Foncti
     int typea=0;                                                        //Déclaration de variable contenant le nombre de fois qu'est utilisé l'ES pour les statiques
     int typeb=0;                                                        //Déclaration de variable contenant le nombre de fois qu'est utilisé l'ES pour les dynamiques
     int typec=0;
-    int typeap=0;                                                        //Déclaration de variable contenant le pourcentage de fois qu'est utilisé l'ES pour les statiques
-    int typebp=0;                                                        //Déclaration de variable contenant le pourcentage de fois qu'est utilisé l'ES pour les dynamiques
-    int typecp=0;                                                        //Déclaration de variable contenant le pourcentage de fois qu'est utilisé l'ES pour les intéractifs
+    float typeap=0;                                                        //Déclaration de variable contenant le pourcentage de fois qu'est utilisé l'ES pour les statiques
+    float typebp=0;                                                        //Déclaration de variable contenant le pourcentage de fois qu'est utilisé l'ES pour les dynamiques
+    float typecp=0;                                                        //Déclaration de variable contenant le pourcentage de fois qu'est utilisé l'ES pour les intéractifs
 
     while(pastrie)                                                      //Boucle qui tourne tant que le tri n'est pas finis
     {
@@ -79,13 +79,12 @@ void tri_bulle(int n)                                                   //Foncti
                     break;
             }
     }
+    typec--;
     n--;
-    typec=typec-1;
-    printf("%d et %d\n",typea,n);
-    typeap=(typea/n);
-    typebp=(typeb/n*100);
-    typecp=(typec/n*100);
-    printf("Vous avez lancé %d (soit %d) fois l'ExiaSaver statique, %d fois le dynamique (soit %d) et %d fois l'interactif (soit %d) ! \n",typea,typeap,typeb,typebp,typec,typecp);
+    typeap=(((float)typea/(float)n)*100);
+    typebp=(((float)typeb/(float)n)*100);
+    typecp=(((float)typec/(float)n)*100);
+    printf("\n\nVous avez lancé %d fois (%.2f %%) l'ExiaSaver statique, %d fois le dynamique (%.2f %%) et %d fois l'interactif (%.2f %%) ! \n\n",typea,typeap,typeb,typebp,typec,typecp);
 }
     
 
@@ -116,6 +115,7 @@ void statistiques()                                                 //Fonction p
         printf("Pour trier par date tapez 1, par type tapez 2 et par dates inversées tapez 3 :\n");
         scanf("%d",&modetri);                                       //On place dans la varible modetri le choix de l'utilisateur
     }
+    system("clear");
     printf("Voici votre historique ");
     switch(modetri){                                                //Ici en fonction du choix de l'utilisateur, on lance nos différents tri
         case 1:                                                     //Si modetri=1 ....
@@ -124,7 +124,7 @@ void statistiques()                                                 //Fonction p
                 printf("Utilisation N°%d:  ",j+1);                  //les différentes lignes du tableau chainehisto
                 printf("%s\n",chainehisto[j]);
             }
-            printf("Vous avez lancé %d fois ExiaSaver !\n",i);      //On indique à l'utilisateur combien de fois il a utilisé l'ES
+            printf("\n\nVous avez lancé %d fois ExiaSaver !\n",i);      //On indique à l'utilisateur combien de fois il a utilisé l'ES
             break;                                                  //Met fin au cas 1
         case 2:                                                     //Si modetri=2 ....
             printf("trié par type:\n\n");
@@ -132,12 +132,13 @@ void statistiques()                                                 //Fonction p
             
             break;
         case 3:                                                     //Si modetri=3 ....
+            i--;
             printf("trié par dates inversées:\n\n");
              for (j=i;j>=0;j--){                                    //On inverse la boucle du mode 1
                 printf("Utilisation N°%d:  ",j+1);                  //ce qui a pour effet d'afficher dans l'autre sens
                 printf("%s\n",chainehisto[j]);                      //les entrées de chainehisto
             }
-            printf("Vous avez lancé %d fois ExiaSaver !\n",i);      //On indique à l'utilisateur combien de fois il a lancé l'ES
+            printf("\n\nVous avez lancé %d fois ExiaSaver !\n",i);      //On indique à l'utilisateur combien de fois il a lancé l'ES
             break;
     }
 
@@ -171,30 +172,6 @@ void entreehistorique(int level, char *info)                            /*Foncti
     }
 }
 
-char getch()                                                            /*Fonction getch de windows, importée sur Linux. SNIPPET TROUVE SUR INTERNET*/
-{
-    char buf=0;                                                         /*Permet de capter l'utilisation du clavier par l'utilisateur*/
-    struct termios old={0};
-
-    fflush(stdout);
-    if(tcgetattr(0, &old)<0)
-        perror("tcsetattr()");
-    old.c_lflag&=~ICANON;
-    old.c_lflag&=~ECHO;
-    old.c_cc[VMIN]=1;
-    old.c_cc[VTIME]=0;
-    if(tcsetattr(0, TCSANOW, &old)<0)
-        perror("tcsetattr ICANON");
-    if(read(0,&buf,1)<0)
-        perror("read()");
-    old.c_lflag|=ICANON;
-    old.c_lflag|=ECHO;
-    if(tcsetattr(0, TCSADRAIN, &old)<0)
-        perror ("tcsetattr ~ICANON");
-    printf("%c\n",buf);
-    return buf;
-}
-
 int main (int agrc, char * argv[])
 {
     char data[16]=" ";                                              //Variable contenant le pramètre de lancement du ScreenSaver
@@ -208,6 +185,8 @@ int main (int agrc, char * argv[])
     char Exiasaver2_Pbm[128];
     int Exiasaver2_taille;
     int Exiasaver2_sleep;
+    char Exiasaver2_taille_c[128];
+    char Exiasaver2_sleep_c[128];
     char Exiasaver3_Pbm[128];
     char Exiasaver32_Pbm[128];
 
@@ -219,7 +198,7 @@ int main (int agrc, char * argv[])
     char positionxc[5];
     char positionyc[5];
 
-    char sensc[5];
+    char sensc[10];
 
     char arghaut[128];
     char argbas[128];
@@ -263,9 +242,8 @@ int main (int agrc, char * argv[])
 
         printf("Lancement du screensaver...\n");
         srand(time(NULL));                                      //Graine permettant d'éviter la repetition lors du randomize
-        //random = rand();                                        //Place dans random une valeur aléatoire sans limites à partir de la seed
-        //random = (random%3);                                    //%3 réduit le résultat à une plage en 0 et 2 soit 3 valeurs
-        random=0;
+        random = rand();                                        //Place dans random une valeur aléatoire sans limites à partir de la seed
+        random = (random%3);                                    //%3 réduit le résultat à une plage en 0 et 2 soit 3 valeurs
         if (random==0)                                          //Si le nombre genere est 0 alors...
         {
             f=fork();                                           //Lance un processus fils 
@@ -311,11 +289,24 @@ int main (int agrc, char * argv[])
                 if(Exiasaver2_taille==1) strcpy(data,"5x3");                         //On rentre dans data des valeurs
                 else strcpy(data,"10x6");
 
-                entreehistorique(random,data);
                 fichier="screensaver2";                         //On donne à fichier la chaine de caratcère afficheur qui correspond au fichier à ouvrir
-                strcat(Exiasaver_home,fichier);                  
+                strcat(Exiasaver_home,fichier);
+
+                printf("%s\n",Exiasaver_home);
+                printf("%s\n",fichier);
+                printf("%d\n",Exiasaver2_taille);
+                printf("%d\n",Exiasaver2_sleep);
+                printf("%s\n",Exiasaver2_Pbm);
+
+                sprintf(Exiasaver2_taille_c,"%d",Exiasaver2_taille);
+                sprintf(Exiasaver2_sleep_c,"%d",Exiasaver2_sleep);
+
+                strcat(data,"/");
+                strcat(data,Exiasaver2_sleep_c);
+                entreehistorique(random,data);                  
+                
                 printf("Demarrage du dynamique\n");
-                execl(Exiasaver_home,fichier,Exiasaver2_taille,Exiasaver2_sleep,Exiasaver2_Pbm,NULL);
+                execl(Exiasaver_home,fichier,Exiasaver2_taille_c,Exiasaver2_sleep_c,Exiasaver2_Pbm,NULL);
                 exit(1);
             }
             else
@@ -348,7 +339,7 @@ int main (int agrc, char * argv[])
                 sprintf(sensc,"%d",sens);
 
                 strcat(data,positionxc);
-                strcat(data,"/");
+                strcat(data,":");
                 strcat(data,positionyc);
                 strcat(data,"/");
                 strcat(data,sensc);
