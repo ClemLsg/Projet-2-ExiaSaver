@@ -200,7 +200,8 @@ int main (int agrc, char * argv[])
     char data[16]=" ";                                              //Variable contenant le pramètre de lancement du ScreenSaver
     char *fichier;                                              //Variable contenant le nom du fichier à executer pour le ScreenSaver
     int f;                                                      //Variable pour le Fork. Contient 0 si fils et le PID du processus si père
-    int random;                                                 //Variable contenant une valeur aléatoire en 1 et 3 pour le lancement du SS
+    int random;
+    int randomizing;                                                 //Variable contenant une valeur aléatoire en 1 et 3 pour le lancement du SS
 
     char Exiasaver_home[128];
     char Exiasaver1_Pbm[128];
@@ -264,15 +265,15 @@ int main (int agrc, char * argv[])
         srand(time(NULL));                                      //Graine permettant d'éviter la repetition lors du randomize
         //random = rand();                                        //Place dans random une valeur aléatoire sans limites à partir de la seed
         //random = (random%3);                                    //%3 réduit le résultat à une plage en 0 et 2 soit 3 valeurs
-        random=2;
+        random=0;
         if (random==0)                                          //Si le nombre genere est 0 alors...
         {
             f=fork();                                           //Lance un processus fils 
             if (f==0)                                           //Uniquement le processus fils avec un PID de 0 peut entrer dans la boucle
             {
-                random = rand();                                
-                random = (random%3);
-                switch(random){
+                randomizing = rand();                                
+                randomizing = (randomizing%5);
+                switch(randomizing){
                     case 0:
                         strcpy(data,"nuage.pbm");               //On met la chaîne de caractère grenouille.pbm dans la variable data
                         break;
@@ -281,6 +282,12 @@ int main (int agrc, char * argv[])
                         break;
                     case 2:
                         strcpy(data,"feep.pbm");
+                        break;
+                    case 3:
+                        strcpy(data,"avionbas.pbm");
+                        break;
+                    case 4:
+                        strcpy(data,"aviondroite.pbm");
                         break;
                 }
                 strcat(Exiasaver1_Pbm,data);                     
