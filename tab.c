@@ -11,11 +11,11 @@
 #include "tab.h"
 
 
-int tab_editeur(char **A, int Xinit, int Yinit, char *file){
+int tab_editeur(char **A, int Xinit, int Yinit, char *file, int tail){
 	struct winsize w; // Création d'une structure contenant la taille de la console
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w); // Ecriture de la taille de la console dans la structure "w"
-	int X,Y, i=0, compteur=0, stop=0; // Initialisation des variables de type INT
-	char nb_magique[1024]="", ligne[1024]="", cara, *token, longueur[1024]="", largeur[1024]=""; // Initialisation des variables de type CHAR
+	int X,Y, i=0, compteur=0, stop=0, m=0; // Initialisation des variables de type INT
+	char nb_magique[1024]="", ligne[1024]="", cara, *token, longueur[1024]="", chaine[1024]="", largeur[1024]="", temp; // Initialisation des variables de type CHAR
 	FILE* fichier = NULL; // Initialisation de notre fichier
 
 	pid_t pid = fork(); // Creation d'un processus fils avec une fork
@@ -55,6 +55,9 @@ int tab_editeur(char **A, int Xinit, int Yinit, char *file){
 	    		token = strtok(NULL," ");
     			strcpy(largeur,token);
     			int larg = atoi(largeur);
+			if(tail == 2){
+			larg =larg*2;
+			}
 
     			if(Xinit == 666){ // Si les coordonnées sont 666 : Centrage par rapport a la taille de la console
     				Xinit = (w.ws_col-longu)/2;
@@ -79,20 +82,48 @@ int tab_editeur(char **A, int Xinit, int Yinit, char *file){
     				if(X<=w.ws_col || Y<=w.ws_row){ // Si les coordonnées du caractère sont bien sur la console
     					if(Y>=w.ws_row) return 0; // Si les coordonées dépassents en Y, ignoré
 	    				if(strncmp(token, "0",1) == 0){ // Si c'est un 0, ecrire un espace
-	    					A[Y][X]=' ';
-	    					X++;
-	    					i++;}
+	    					if(tail == 2){
+						    A[Y][X]=' ';
+						    A[Y][X+1]=' ';
+						    strcat(chaine, "  ");
+						    X = X+2;
+						    i++;
+						} else {
+						    A[Y][X]=' ';
+						    X++;
+						    i++;
+						}}
 	    				if(strncmp(token, "1",1) == 0){ // Si c'est un 1, ecrire un X
-	    					A[Y][X]='X';
-	    					X++;
-	    					i++;}
+	    					if(tail == 2){
+						    A[Y][X]='@';
+						    A[Y][X+1]='@';
+						    strcat(chaine, "@@");
+						    X = X+2;
+						    i++;
+						} else {
+						    A[Y][X]='@';
+						    X++;
+						    i++;
+						}}
 	    				if(strncmp(token, "2",1) == 0){ // Si c'est un 2, mettre un vide
 	    					X++;
 	    					i++;}
 	    				if(i>=longu){ // Si l'on a parcouru toute la ligne, changé de ligne
-	    					Y++;
-	    					X=Xinit;
-	    					i=0;}
+	    					if(tail == 2){
+						    X=Xinit;
+						    for(m = 0; m < 6; m++){
+							temp = chaine[m];
+							A[Y+1][X]= temp;
+							X++;
+							chaine[m] = 0;
+						    }
+						    Y = Y+2;
+						} else {
+						    Y++;
+						}
+						X=Xinit;
+						i=0;
+					}
 	    			token = strtok(NULL," "); // Changement de token
 
     				}
