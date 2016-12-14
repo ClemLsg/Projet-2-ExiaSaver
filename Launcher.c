@@ -6,7 +6,6 @@
 #include <sys/types.h>                                                  //Bibliothèque permettant de gerer les définitions de temps pour UNIX
 #include <termios.h>                                                    //Bibliothèque permettant de gerer les définitions des valeurs du termios
 
-#define TAILLE_MAX 40                                                   //Définit TAILLE_MAX à 40
 #define TRUE 1                                                          //Définit TRUE comme 1
 #define FALSE 0                                                         //Définit FALSE comme 0
 
@@ -39,7 +38,11 @@ void tri_bulle(int n)                                                   //Foncti
     char temp;                                                          //Déclaration d'une variable char tempon, contient la chaine en cours de transfert dans le tri à bulle
     int typea=0;                                                        //Déclaration de variable contenant le nombre de fois qu'est utilisé l'ES pour les statiques
     int typeb=0;                                                        //Déclaration de variable contenant le nombre de fois qu'est utilisé l'ES pour les dynamiques
-    int typec=0;                                                        //Déclaration de variable contenant le nombre de fois qu'est utilisé l'ES pour les intéractifs
+    int typec=0;
+    int typeap=0;                                                        //Déclaration de variable contenant le pourcentage de fois qu'est utilisé l'ES pour les statiques
+    int typebp=0;                                                        //Déclaration de variable contenant le pourcentage de fois qu'est utilisé l'ES pour les dynamiques
+    int typecp=0;                                                        //Déclaration de variable contenant le pourcentage de fois qu'est utilisé l'ES pour les intéractifs
+
     while(pastrie)                                                      //Boucle qui tourne tant que le tri n'est pas finis
     {
         pastrie=FALSE;                                                  //Définit de base le tri comme non finit (juste pour être sur)
@@ -76,25 +79,30 @@ void tri_bulle(int n)                                                   //Foncti
                     break;
             }
     }
+    n--;
     typec=typec-1;
-    printf("Vous avez lancé %d fois l'ExiaSaver statique, %d fois le dynamique et %d fois l'interactif ! \n",typea,typeb,typec);
+    printf("%d et %d\n",typea,n);
+    typeap=(typea/n);
+    typebp=(typeb/n*100);
+    typecp=(typec/n*100);
+    printf("Vous avez lancé %d (soit %d) fois l'ExiaSaver statique, %d fois le dynamique (soit %d) et %d fois l'interactif (soit %d) ! \n",typea,typeap,typeb,typebp,typec,typecp);
 }
     
 
 void statistiques()                                                 //Fonction permettant l'affichage des statistiques
 {
-    char chaine[TAILLE_MAX] = "r";                                  //Variable chaine définie avec une taille par DEFINE qui contiendra la chaine en cours d'utilisation
+    char chaine[255] = "r";                                  //Variable chaine définie avec une taille par DEFINE qui contiendra la chaine en cours d'utilisation
     int modetri;                                                    //Varibale qui contient le mode de triage choisit par l'utilisateur
     int i=0;                                                          //Variable qui sert de compteur pour le nombre de ligne dans le fichier historique
     int j;                                                          //Compteur
     int n;                                                          //Compteur
-    fichierstats = fopen("historique", "r" );                       //Ouvre le fichier d'historique avec les droits de lecture
+    fichierstats = fopen("/home/enzo/Documents/ExiaSaver/historique", "r" );                       //Ouvre le fichier d'historique avec les droits de lecture
     if (fichierstats==NULL){ 
                 printf("Erreur d'ouverture fichier");               //Affiche une erreur si le fichier n'est pas ouvrable
             }                                                        
     while (strcmp(chaine," ")!=0)                                   //Tant que la variable chaine ne contient pas un blanc....
     {
-        fgets(chaine, TAILLE_MAX, fichierstats);                    //On récupère ligne par ligne le fichier historique et....
+        fgets(chaine, 255, fichierstats);                    //On récupère ligne par ligne le fichier historique et....
         if (strcmp(chaine," ")!=0)                                  //Si ce qu'on recupère n'est toujours pas un blanc
         {
             strcat(chainehisto[i], chaine);                         //On colle ce qu'on vient de récuperer dans une variable char tampon qui contiendra alors l'ensemble du fichier historique sous forme de varibale, le tout dans le bon format (saut de lignes inclus)
@@ -143,7 +151,7 @@ void entreehistorique(int level, char *info)                            /*Foncti
     level=level+1;
     sprintf(insertion,"%d",level);
 
-    fichierstats = fopen("historique", "r+" );                          /*Ouvre le fichier historique avec les droits ecriture et lecture*/
+    fichierstats = fopen("/home/enzo/Documents/ExiaSaver/historique", "r+" );                          /*Ouvre le fichier historique avec les droits ecriture et lecture*/
 
     fseek(fichierstats, -1, SEEK_END);                                   /*Place le curseur virtuel au bout du fichier*/ 
     time_t now = time (NULL);                                           /*Récupère le temps dans la variable now*/
@@ -189,10 +197,35 @@ char getch()                                                            /*Foncti
 
 int main (int agrc, char * argv[])
 {
-    char data[16];                                              //Variable contenant le pramètre de lancement du ScreenSaver
+    char data[16]=" ";                                              //Variable contenant le pramètre de lancement du ScreenSaver
     char *fichier;                                              //Variable contenant le nom du fichier à executer pour le ScreenSaver
     int f;                                                      //Variable pour le Fork. Contient 0 si fils et le PID du processus si père
     int random;                                                 //Variable contenant une valeur aléatoire en 1 et 3 pour le lancement du SS
+
+    char Exiasaver_home[128];
+    char Exiasaver1_Pbm[128];
+    char Exiasaver2_Pbm[128];
+    int Exiasaver2_taille;
+    int Exiasaver2_sleep;
+    char Exiasaver3_Pbm[128];
+    char Exiasaver32_Pbm[128];
+
+    int positionx;
+    int positiony;
+
+    int sens;
+
+    char positionxc[5];
+    char positionyc[5];
+
+    char sensc[5];
+
+    char arghaut[128];
+    char argbas[128];
+    char arggauche[128];
+    char argdroit[128];
+    char argnuage[128];
+
 
     system("clear");                                            //Commande vidant la console, affiche plus propre
     if (agrc>1)                                                 //Condition valide si agrc (nombre de paramètres lancés avec ES) est supérieur à 1
@@ -209,20 +242,53 @@ int main (int agrc, char * argv[])
     }  
     else                                                        //Arrive ici si le ES n'est pas lancé avec des arguments
     {
+        if (getenv("EXIASAVER_HOME")!=NULL) strcpy(Exiasaver_home,getenv("EXIASAVER_HOME"));
+        else printf("Variable non trouvé\n");
+
+        if (getenv("EXIASAVER1_PBM")!=NULL) strcpy(Exiasaver1_Pbm,getenv("EXIASAVER1_PBM"));
+        else printf("Variable non trouvé\n");
+
+        if (getenv("EXIASAVER2_PBM")!=NULL) strcpy(Exiasaver2_Pbm,getenv("EXIASAVER2_PBM"));
+        else printf("Variable non trouvé\n");
+
+        if (getenv("EXIASAVER2_TAILLE")!=NULL) Exiasaver2_taille=atoi(getenv("EXIASAVER2_TAILLE"));
+        else printf("Variable non trouvé\n");
+
+        if (getenv("EXIASAVER2_SLEEP")!=NULL) Exiasaver2_sleep=atoi(getenv("EXIASAVER2_SLEEP"));
+        else printf("Variable non trouvé\n");
+
+        if (getenv("EXIASAVER3_PBM")!=NULL) strcpy(Exiasaver3_Pbm,getenv("EXIASAVER3_PBM"));
+        else printf("Variable non trouvé\n");
+
         printf("Lancement du screensaver...\n");
         srand(time(NULL));                                      //Graine permettant d'éviter la repetition lors du randomize
-        random = rand();                                        //Place dans random une valeur aléatoire sans limites à partir de la seed
-        random = (random%3);                                    //%3 réduit le résultat à une plage en 0 et 2 soit 3 valeurs
+        //random = rand();                                        //Place dans random une valeur aléatoire sans limites à partir de la seed
+        //random = (random%3);                                    //%3 réduit le résultat à une plage en 0 et 2 soit 3 valeurs
+        random=2;
         if (random==0)                                          //Si le nombre genere est 0 alors...
         {
             f=fork();                                           //Lance un processus fils 
             if (f==0)                                           //Uniquement le processus fils avec un PID de 0 peut entrer dans la boucle
             {
-                strcpy(data,"grenouille.pbm");                  //On met la chaîne de caractère grenouille.pbm dans la variable data
+                random = rand();                                
+                random = (random%3);
+                switch(random){
+                    case 0:
+                        strcpy(data,"nuage.pbm");               //On met la chaîne de caractère grenouille.pbm dans la variable data
+                        break;
+                    case 1:
+                        strcpy(data,"grenouille.pbm");
+                        break;
+                    case 2:
+                        strcpy(data,"feep.pbm");
+                        break;
+                }
+                strcat(Exiasaver1_Pbm,data);                     
                 entreehistorique(random,data);                  //On entre dans la fonction entreehistorique avec les arguments random et data
-                fichier="afficheur";                            //On donne à fichier la chaine de caratcère afficheur qui correspond au fichier à ouvrir
+                fichier="screensaver1";                         //On donne à fichier la chaine de caratcère afficheur qui correspond au fichier à ouvrir
+                strcat(Exiasaver_home,fichier);
                 printf("Demarrage du statique\n");
-                execl(fichier,fichier,"666","666",data,NULL);       //On execute le fichier afficheur avec l'argument 666 qui position au centre de la console l'image
+                execl(Exiasaver_home,fichier,"666","666",Exiasaver1_Pbm,NULL);   //On execute le fichier afficheur avec l'argument 666 qui position au centre de la console l'image
                 exit(1);                                        //On tue le processus fils
             }
             else                                                
@@ -235,9 +301,14 @@ int main (int agrc, char * argv[])
             f=fork();
             if (f==0)
             {
-                strcpy(data,"10x10");                           //On rentre dans data des valeurs
-                entreehistorique(random,data);                  
+                if(Exiasaver2_taille==1) strcpy(data,"5x3");                         //On rentre dans data des valeurs
+                else strcpy(data,"10x6");
+
+                entreehistorique(random,data);
+                fichier="screensaver2";                         //On donne à fichier la chaine de caratcère afficheur qui correspond au fichier à ouvrir
+                strcat(Exiasaver_home,fichier);                  
                 printf("Demarrage du dynamique\n");
+                execl(Exiasaver_home,fichier,Exiasaver2_taille,Exiasaver2_sleep,Exiasaver2_Pbm,NULL);
                 exit(1);
             }
             else
@@ -250,12 +321,59 @@ int main (int agrc, char * argv[])
             f=fork();
             if (f==0)
             {
-                strcpy(data,"20x20");
+                fichier="screensaver3";
+                strcat(Exiasaver_home,fichier);
+
+                srand(time(NULL));
+                positionx = rand();                                
+                positionx = (positionx%80);
+
+                srand(time(NULL));
+                positiony = rand();                                
+                positiony = (positiony%24);
+
+                srand(time(NULL));
+                sens = rand();                                
+                sens = (sens%3);
+
+                sprintf(positionxc,"%d",positionx);
+                sprintf(positionyc,"%d",positiony);
+                sprintf(sensc,"%d",sens);
+
+                strcat(data,positionxc);
+                strcat(data,"/");
+                strcat(data,positionyc);
+                strcat(data,"/");
+                strcat(data,sensc);
+
                 entreehistorique(random,data);
-                fichier="screensaver";
+
+                strcpy(Exiasaver32_Pbm,Exiasaver3_Pbm);
+                strcpy(argdroit,strcat(Exiasaver32_Pbm,"aviondroite.pbm"));
+
+                strcpy(Exiasaver32_Pbm,Exiasaver3_Pbm);
+                strcpy(arggauche,strcat(Exiasaver32_Pbm,"aviongauche.pbm"));
+
+                strcpy(Exiasaver32_Pbm,Exiasaver3_Pbm);
+                strcpy(arghaut,strcat(Exiasaver32_Pbm,"avionhaut.pbm"));
+
+                strcpy(Exiasaver32_Pbm,Exiasaver3_Pbm);
+                strcpy(argbas,strcat(Exiasaver32_Pbm,"avionbas.pbm"));
+
+                strcpy(Exiasaver32_Pbm,Exiasaver3_Pbm);
+                strcpy(argnuage,strcat(Exiasaver32_Pbm,"nuage.pbm"));
+
                 printf("Demarrage de l'interactif\n");
-                execl(fichier,fichier,"20","20","2",NULL);
-                perror("Erreur: ");
+
+                printf("%s\n",Exiasaver_home);
+                printf("%s\n",fichier);
+                printf("%s\n",arghaut);
+                printf("%s\n",argbas);
+                printf("%s\n",arggauche);
+                printf("%s\n",argdroit);
+                printf("%s\n",argnuage);
+
+                execl(Exiasaver_home,fichier,positionxc,positionyc,sensc,arghaut,argbas,arggauche,argdroit,argnuage,NULL);
                 exit(1);
             }
             else
