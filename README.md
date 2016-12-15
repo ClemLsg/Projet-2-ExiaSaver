@@ -7,7 +7,7 @@ Les variables d'environnement doivent être présentes !
 Mettez le dossier ExiaSaver dans votre repertoire Documents.
 
 Ensuite vous devez déclarer vos variables evironnement...
-Pour ceci, modifiez le fichier etc/bash.bashrc en ajoutant les lignes suivantes à la fin du fichier :
+Pour ceci, modifiez le fichier etc/bash.bashrc en ajoutant les lignes suivantes à la fin du fichier tout en editant [NOM UTILISATEUR] avec le votre pour que le chemin soit le bon.:
 
 export EXIASAVER_HOME=/home/[NOM UTILISATEUR]/Documents/ExiaSaver/
 export EXIASAVER1_PBM=/home/[NOM UTILISATEUR]/Documents/ExiaSaver/Images/Statique/
@@ -24,3 +24,5 @@ EXIASAVER2_TAILLE donne la taille d'affichage de l'heure, ecrivez 1 pour 5x3 et 
 EXIASAVER2_SLEEP donne le temps de rafraichissement de l'horloge. Tapez 1 pour 1 seconde entre chaque affichage etc....
 
 Redemarrez toujours quand vous modifiez vos variables d'environnement...
+
+Maintenant mettez le fichier launcher dans le dossier bin.
