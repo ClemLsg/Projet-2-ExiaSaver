@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
+#include <string.h>	//Bibliothèque permettant de gerer les chaines de charactère
+#include <sys/ioctl.h>  
+#include <unistd.h>     //Bibliothèque permettant de gerer les symbols standard
 #include <errno.h>
 #include <sys/wait.h>
 #include <sys/types.h>
